@@ -4,6 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Cors;
+using System.Web.Http.Cors;
+using MySql.Data.MySqlClient;
 
 namespace WebApi.Controllers
 {
@@ -18,7 +21,29 @@ namespace WebApi.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            MySqlConnection conn = WebApiConfig.conn();
+
+            // 数据库命令
+            MySqlCommand query = conn.CreateCommand();
+
+            query.CommandText = "SELECT user_name FROM tbl_user";
+            try
+            {
+                conn.Open();
+            }
+            catch(MySqlException ex)
+            {
+                return "failure" + ex;
+            }
+
+            MySqlDataReader fetch_query = query.ExecuteReader();
+
+            while (fetch_query.Read())
+            {
+                return fetch_query["user_name"].ToString();
+            }
+
+            return "Its done!";
         }
 
         // POST api/values

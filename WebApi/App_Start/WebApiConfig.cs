@@ -9,11 +9,35 @@ namespace WebApi
 {
     public static class WebApiConfig
     {
+        #region 数据库连接配置
+        /*****************数据库配置************************/
+        struct DBConfig {
+            public static string server = "localhost";         // 服务器
+            public static string port = "3306";                    // 端口号
+            public static string database = "webapi_db";   // 数据库
+            public static string username = "root";            //用户名
+            public static string password = "";                    //密码
+        }
+
+        static string conn_string
+        {
+            get
+            {
+                string param = "";
+                param += "server=" + DBConfig.server;
+                param += ";port=" + DBConfig.port;
+                param += ";database=" + DBConfig.database;
+                param += ";username=" + DBConfig.username;
+                param += ";password=" + DBConfig.password;
+                param += ";";
+                return param;
+            }
+        }
+        #endregion
+
         // 连接数据库
         public static MySqlConnection conn()
         {
-            string conn_string = "server=localhost;port=3306;database=webapi_db;username=root;password=;";
-
             MySqlConnection connect = new MySqlConnection(conn_string);
 
             return connect;

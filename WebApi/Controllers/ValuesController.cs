@@ -26,21 +26,21 @@ namespace WebApi.Controllers
             // 数据库命令
             MySqlCommand query = conn.CreateCommand();
 
-            query.CommandText = "SELECT user_name FROM tbl_user";
-            try
-            {
-                conn.Open();
-            }
-            catch(MySqlException ex)
-            {
-                return "failure" + ex;
-            }
+            query.CommandText = "SELECT name FROM tbl_product";
+            //try
+            //{
+            //    conn.Open();
+            //}
+            //catch(MySqlException ex)
+            //{
+            //    return "failure" + ex;
+            //}
 
             MySqlDataReader fetch_query = query.ExecuteReader();
 
             while (fetch_query.Read())
             {
-                return fetch_query["user_name"].ToString();
+                return fetch_query["name"].ToString();
             }
 
             return "Its done!";

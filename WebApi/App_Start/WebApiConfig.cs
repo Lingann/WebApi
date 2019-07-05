@@ -39,7 +39,16 @@ namespace WebApi
         public static MySqlConnection conn()
         {
             MySqlConnection connect = new MySqlConnection(conn_string);
-
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                connect.Open();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            connect.Clone();
             return connect;
         }
 
